@@ -14,11 +14,11 @@ after_sucess:
   - docker build -t guillermojose/multi-server ./server
   - docker build -t guillermojose/multi-worker ./worker
   # Log in to the docker CLI
-  - echo "$DOCKER_PASSWORD" | docker_login -u "$DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
   - docker push guillermojose/multi-client
   - docker push guillermojose/multi-nginx
   - docker push guillermojose/multi-server
   - docker push guillermojose/multi-worker
-  
+
 
