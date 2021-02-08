@@ -1,0 +1,24 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t guillermojose/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true guillermojose/react-test npm test -- --coverage
+
+after_sucess:
+  - docker build -t guillermojose/multi-client ./client
+  - docker build -t guillermojose/multi-nginx ./nginx
+  - docker build -t guillermojose/multi-server ./server
+  - docker build -t guillermojose/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker_login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push guillermojose/multi-client
+  - docker push guillermojose/multi-nginx
+  - docker push guillermojose/multi-server
+  - docker push guillermojose/multi-worker
+  
+
