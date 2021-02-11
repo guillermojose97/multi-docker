@@ -21,4 +21,16 @@ after_sucess:
   - docker push guillermojose/multi-server
   - docker push guillermojose/multi-worker
 
+deploy:
+  provider: elasticbeanstalk
+  region: us-west-1
+  app: multi-docker
+  env: Multidocker-env
+  bucker_name: elasticbeanstalk-us-west-1-574866783585
+  bucker_path: docker-multi
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+
 
